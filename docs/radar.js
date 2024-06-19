@@ -48,10 +48,11 @@ function radar_visualization(config) {
   ];
 
   const rings = [
-    { radius: 130 },
-    { radius: 220 },
-    { radius: 310 },
+    { radius: 160 },
+    { radius: 240 },
+    { radius: 320 },
     { radius: 400 }
+	//{ radius: 470 },
   ];
 
   const title_offset =
@@ -149,8 +150,10 @@ function radar_visualization(config) {
     var point = entry.segment.random();
     entry.x = point.x;
     entry.y = point.y;
-    entry.color = entry.active || config.print_layout ?
-      config.rings[entry.ring].color : config.colors.inactive;
+    entry.color = entry.painpoint ? config.colors.painpoint : entry.active || config.print_layout ? config.rings[entry.ring].color : config.colors.inactive;
+	entry.radius ??= 12;
+	entry.fontsize ??= 12;
+	entry.bold ??= false;
   }
 
   // partition entries according to segments
@@ -298,7 +301,7 @@ function radar_visualization(config) {
     // footer
     radar.append("text")
       .attr("transform", translate(footer_offset.x, footer_offset.y))
-      .text("▲ moved up     ▼ moved down")
+      //.text("? moved up     ? moved down")
       .attr("xml:space", "preserve")
       .style("font-family", config.font_family)
       .style("font-size", "10px");
@@ -432,17 +435,21 @@ function radar_visualization(config) {
     }
 
     // blip shape
-    if (d.moved > 0) {
+    if (d.painpoint == true) {
       blip.append("path")
-        .attr("d", "M -11,5 11,5 0,-13 z") // triangle pointing up
+        .attr("d", "M -15,9 15,9 0,-15 z") // triangle pointing up
+        .style("fill", d.color);
+    } else if (d.moved > 0) {
+      blip.append("path")
+        .attr("d", "M -15,9 15,9 0,-15 z") // triangle pointing up
         .style("fill", d.color);
     } else if (d.moved < 0) {
       blip.append("path")
-        .attr("d", "M -11,-5 11,-5 0,13 z") // triangle pointing down
+        .attr("d", "M -15,-9 15,-9 0,15 z") // triangle pointing down
         .style("fill", d.color);
     } else {
       blip.append("circle")
-        .attr("r", 9)
+        .attr("r", d.radius)
         .attr("fill", d.color);
     }
 
@@ -455,7 +462,8 @@ function radar_visualization(config) {
         .attr("text-anchor", "middle")
         .style("fill", "#fff")
         .style("font-family", config.font_family)
-        .style("font-size", function(d) { return blip_text.length > 2 ? "8px" : "9px"; })
+        .style("font-size", function(d) { return blip_text.length > 2 ? (d.fontsize - 1) + "px" : d.fontsize + "px"; })
+		.style("font-weight", function(d) { return d.bold == true ? "bold" : "normal"; })
         .style("pointer-events", "none")
         .style("user-select", "none");
     }
