@@ -128,6 +128,12 @@
             "label": "NUnit",
             "active": true
         },
+		{
+            "quadrant": 0,
+            "ring": 1,
+            "label": "PDFPig",
+            "active": true
+        },		
         {
             "quadrant": 2,
             "ring": 0,
