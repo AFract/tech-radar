@@ -14,10 +14,22 @@
             "link": "",
             "active": true
         },
-        {
+        {			
             "quadrant": 0,
             "ring": 0,
             "label": "HTML",
+            "active": true
+        },
+		{
+            "quadrant": 0,
+            "ring": 0,
+            "label": "Winform",
+            "active": true
+        },
+		{
+            "quadrant": 0,
+            "ring": 0,
+            "label": "WPF",
             "active": true
         },
         {
@@ -129,7 +141,7 @@
             "active": true
         },
 		{
-            "quadrant": 0,
+            "quadrant": 2,
             "ring": 1,
             "label": "PDFPig",
             "active": true
@@ -206,7 +218,8 @@
             "ring": 3,
             "label": "WCF",
             "active": true,
-            "painpoint": true
+            "painpoint": true,
+			"details": "Replace with Swagger/REST"
         },
         {
             "quadrant": 3,
